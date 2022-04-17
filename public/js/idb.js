@@ -1,4 +1,4 @@
-// create variable to hold db connection
+// created variable to hold db connection
 let db;
 const request = indexedDB.open('budget', 1);
 
@@ -15,7 +15,7 @@ request.onsuccess = function (event) {
 
     // check if app is online, if yes run uploadBudget() function to send all local db data to api
     if (navigator.onLine) {
-        // upload budget once online
+        // upload budget once it is online
         uploadBudget();
     }
 };
@@ -27,24 +27,16 @@ request.onerror = function (event) {
 
 // This function will be executed if we attempt to submit a new budget and there's no internet connection
 function saveRecord(record) {
-    // open a new transaction with the database with read and write permissions 
+
     const transaction = db.transaction(['new_budget'], 'readwrite');
-
-    // access the object store for `new_pizza`
     const budgetObjectStore = transaction.objectStore('new_budget');
-
-    // add record to your store with add method
     budgetObjectStore.add(record);
 }
 
+// uploads stored budget
 function uploadBudget() {
-    // open a transaction on your db
     const transaction = db.transaction(['new_budget'], 'readwrite');
-
-    // access your object store
     const budgetObjectStore = transaction.objectStore('new_budget');
-
-    // get all records from store and set to a variable
     const getAll = budgetObjectStore.getAll();
 
     // upon a successful .getAll() execution, run this function

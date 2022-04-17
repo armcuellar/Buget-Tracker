@@ -9,6 +9,7 @@ const FILES_TO_CACHE = [
     "./js/idb.js"
 ];
 
+// Install service worker it cache resources
 self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
@@ -19,6 +20,7 @@ self.addEventListener('install', function (e) {
 
 })
 
+// activate service worker it deletes outdated caches
 self.addEventListener('activate', function (e) {
     e.waitUntil(
         caches.keys().then(function (keyList) {
@@ -39,6 +41,7 @@ self.addEventListener('activate', function (e) {
     );
 });
 
+// Respond with cached resources
 self.addEventListener('fetch', function (e) {
     console.log('fetch request : ' + e.request.url)
 
